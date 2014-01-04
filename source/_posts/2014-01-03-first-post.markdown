@@ -6,13 +6,14 @@ comments: true
 categories: 
 ---
 
-Some Markdown style test
-=========
+
 
 header
 # Header 1
 ## Header 2
 ### Header 3
+
+<!--more-->
 
 list
 
@@ -40,6 +41,6 @@ if (fbfd <0 ) {
 
 pic & hyper link
 
-![](images/profile.jpg)
+![](/images/profile.jpg)
 
-[Pic link](images/profile.jpg)
+[Pic link](/images/profile.jpg)
