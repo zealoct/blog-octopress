@@ -1,8 +1,6 @@
 ---
 layout: page
-title: "Notes"
-date: 2014-01-07 12:58
-comments: true
+title: "读书笔记"
 sharing: true
 footer: true
 ---

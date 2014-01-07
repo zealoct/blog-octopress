@@ -2,7 +2,6 @@
 layout: post
 published: true
 title: "《大众的反叛》第一章 大众时代的来临"
-date: 2014-01-03 19:27:50 +0800
 comments: true
 type: post
 toc: true
