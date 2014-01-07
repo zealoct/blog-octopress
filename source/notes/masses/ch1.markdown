@@ -1,11 +1,10 @@
 ---
-layout: post
+layout: page
 published: true
 title: "《大众的反叛》第一章 大众时代的来临"
 comments: true
-type: post
-toc: true
 startLevel: 
+categories:
 ---
 
 >当代欧洲的公共生活凸显出这样一个极端重要的事实，那就是大众开始占据最高的社会权力 
