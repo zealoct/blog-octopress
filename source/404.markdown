@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "_(:3」∠)_  您访问的页面躺了"
+title: "_(:3」∠)__  您访问的页面躺了"
 comments: false
 sharing: false
 footer: false
