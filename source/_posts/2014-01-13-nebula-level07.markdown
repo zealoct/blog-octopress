@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "xploit Exercises - Nebula Level 07"
+title: "Exploit Exercises - Nebula Level 07"
 date: 2014-01-13 15:49:10 +0800
 comments: true
 categories: Security, Exercises, Nebula
