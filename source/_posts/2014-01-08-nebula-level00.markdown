@@ -3,7 +3,10 @@ layout: post
 title: "Exploit Exercises - Nebula Level00"
 date: 2014-01-08 19:19:58 +0800
 comments: true
-categories: Security, Exercises, Nebula
+categories: 
+- Security
+- Exercises
+- Nebula
 ---
 
 之前斌哥推荐了一个[Exploit Exercise](http://exploit-exercises.com/)，上面有一些小练习，最近决定去做一做玩玩。网站上练习的话分为以下几个子项目：

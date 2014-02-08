@@ -3,7 +3,10 @@ layout: post
 title: "Exploit Exercises - Nebula Level02"
 date: 2014-01-09 15:13:38 +0800
 comments: true
-categories: Security, Exercises, Nebula
+categories: 
+- Security
+- Exercises
+- Nebula
 ---
 
 基本过程与level01一样，先看/home/flag02/flag02的源代码：

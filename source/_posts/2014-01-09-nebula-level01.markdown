@@ -3,7 +3,10 @@ layout: post
 title: "Exploit Exercises - Nebula Level01"
 date: 2014-01-09 14:54:40 +0800
 comments: true
-categories: Security, Exercises, Nebula
+categories:
+- Security
+- Exercises
+- Nebula
 ---
 
 有了level00的铺垫，level01就非常简单直接了。感觉上Nebula系列的基本要求是用levelXX用户登录，通过放在/home/flagXX目录下的可执行程序来获得flagXX的用户权限，对于level01而言，可执行程序为/home/flag01/flag01，其源代码在网站上给出了：
