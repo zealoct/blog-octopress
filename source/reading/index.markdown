@@ -1,9 +1,12 @@
 ---
 layout: page
-title: "读书笔记"
+title: "阅读随录"
 sharing: true
 footer: true
 ---
+
+## 文献
+- [Paxos Made Simple](/reading/papers/paxos-simple.html)
 
 ## 书摘
 
