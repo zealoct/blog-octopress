@@ -8,4 +8,4 @@ footer: true
 ## 书摘
 
 #### 《大众的反叛》(The Revolt of the Masses)
-- [ 第一章 大众时代的来临](/notes/masses/ch1.html)
+- [ 第一章 大众时代的来临](/reading/masses/ch1.html)
