@@ -1,0 +1,28 @@
+[Fault Tolerance: Paxos](http://pdos.csail.mit.edu/6.824-2013/notes/l05.txt)
+
+系统包括
+- 客户端（client）
+- kvpaxos服务器（server）
+- Paxos节点（peers）
+
+其中Paxos节点部分以类库的形式运行在服务器之上，在lab3的整体模型类似于[Paxos Made Simple]()第三节提到的状态机，其中proposer、acceptor和learner都是Paxos节点，**把整个键值存储服务看成一个状态机**，它会按照一定的顺序执行客户端发来的所有命令（Put请求），每个命令都确定性的把整个状态机向前推进一步。
+
+在这里，这个状态机是由很多服务器共同构成的，这些服务器之间彼此要**保证执行的命令的顺序完全一致**，为此，我们维护一个有序序列*list*，该序列就是所有服务器应当执行命令的顺序。
+
+在服务器收到一个Put(k, v)请求之后
+
+1. 在该序列中寻找到当前最小的空位*list[n]*，也就是新命令应该存储的位置
+2. 向Paxos节点propose在该位置上放置*key=>value*这个命令，注意同时可能有多个服务器尝试向*list[n]*这个位置放置命令，这时Paxos负责协调统一，决定最终放置在*list[n]*处的命令应该是什么
+3. 对于单个服务器而言，如果最终Paxos决定放置在*list[n]*处的命令与其propose的相同，则放置命令成功，对Put命令的处理结束；反之，则继续尝试在*list[n+1]*处放置其propose的命令。
+
+
+**How Put(key, value) and px.Start(seq, v) meet?**
+
+
+**Log slot?**
+
+
+**(* Paxos).Start(seq int, v interface{})**
+
+
+**(* Paxos).Status(seq int) (decided bool, v interface{})**
