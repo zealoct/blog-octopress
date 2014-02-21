@@ -113,7 +113,7 @@ task :new_post, :title do |t, args|
     post.puts "categories: "
     post.puts "---"
   end
-  %x(gedit #{filename} &)
+  Kernel.spawn("gedit", filename)
 end
 
 # usage rake new_page[my-new-page] or rake new_page[my-new-page.html] or rake new_page (defaults to "new-page.markdown")
@@ -149,7 +149,8 @@ task :new_page, :filename do |t, args|
       page.puts "sharing: true"
       page.puts "footer: true"
       page.puts "---"
-    end
+	end 
+	Kernel.spawn("gedit", file)
   else
     puts "Syntax error: #{args.filename} contains unsupported characters"
   end
