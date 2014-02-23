@@ -3,6 +3,7 @@ layout: post
 title: "6.824 Lab2 Notes"
 date: 2014-02-08 15:53:24 +0800
 comments: true
+published: false
 categories:
 - Exercises
 - Distributed Systems
