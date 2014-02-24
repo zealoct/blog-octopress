@@ -7,3 +7,4 @@ sharing: true
 footer: true
 ---
 
+[Vim Notes](/notes/vim.html)
