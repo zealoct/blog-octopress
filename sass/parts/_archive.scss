@@ -43,7 +43,7 @@
 		}
 		.meta{
 			color: $color-gray02;
-			font-size: 0.9em;
+			font-size: 1.3em;
 			line-height: 2;
 			margin-top: 15px;
 			@media screen and (max-width: 600px){
@@ -56,6 +56,17 @@
 					color: $color-gray03;
 					font: 1.3em $font-icon;
 					padding-right: 10px;
+				}
+
+			}
+			.comments {
+				margin-right:0px;
+				padding-left:30px;
+				float:right;
+				&:before{
+					position: absolute;
+					right: 80px;
+					top: 4px;
 				}
 			}
 			a{

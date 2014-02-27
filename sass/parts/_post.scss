@@ -9,7 +9,7 @@
 		position: absolute;
 		top: 85px;
 		line-height: 2;
-		font-size: 0.9em;
+		font-size: 1.2em;
 		color: $color-gray02;
 		width: 170px;
 		@media screen and (max-width: 800px){
@@ -22,7 +22,7 @@
 			@include transition(0.3s);
 		}
 		.date, .tags, .comments{
-			padding-left: 30px;
+			text-align: left;
 			position: relative;
 			&:before{
 				color: $color-gray03;
@@ -35,6 +35,17 @@
 				@include inline-block;
 				margin-right: 30px;
 			}
+		}
+
+		.tags {
+			padding-left: 30px;
+		}
+
+		.comments {
+			text-align: left;
+			float: right;
+			margin-left: 20px;
+			padding-left: 20px;
 		}
 		.date:before{content: "\f073";}
 		.tags:before{content: "\f02c";}

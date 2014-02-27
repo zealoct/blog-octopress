@@ -75,8 +75,8 @@ github_skip_forks: true
 # Twitter
 twitter_user: zealoct
 twitter_tweet_count: 5
-twitter_tweet_button: true
-twitter_follow_button: true
+twitter_tweet_button: false
+twitter_follow_button: false
 
 # Google +1
 google_plus_one: true
@@ -103,4 +103,10 @@ disqus_show_comment_count: true
 google_analytics_tracking_id:
 
 # Facebook Like
-facebook_like: true
+facebook_like: false 
+
+# Baidu Share
+baidu_share: false
+
+# Jiathis Share 
+jiathis: true
