@@ -3,7 +3,7 @@ layout: post
 title: "Exploit Exercises - Nebula Level 11"
 date: 2014-01-26 16:44:20 +0800
 comments: true
-published: false
+published: true
 categories: 
 - Security
 - Exercises
