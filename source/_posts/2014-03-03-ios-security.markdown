@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Abstract of iOS Security Whitepaper"
+title: "Notes on iOS Security Whitepaper"
 date: 2014-03-03 19:56:09 +0800
 comments: true
 published: true
@@ -10,14 +10,18 @@ categories:
 - iOS
 ---
 
+This notes is based on *iOS Security - February 2014*, origin link can be found [here](http://images.apple.com/iphone/business/docs/iOS_Security_Feb14.pdf).
+
+This paper gives a brief description of iOS security, including hardware security features and how iOS leverages these features.
+
 System Security
 ---------------
 
 ### Secure Boot Chain
 
-ROM sealed with PK of Apple Root CA verify the Low-Level Bootloader (LLB)
+ROM is sealed with public key of Apple Root CA, and will verify the Low-Level Bootloader (LLB) before load it.
 
-For devices with an A7 processor, the Secure Enclave coprocessor also utilizes a secure  boot process that ensures its separate software is verified and signed by Apple.
+For devices with an A7 processor, the *Secure Enclave* coprocessor also utilizes a secure boot process that ensures its separate software is verified and signed by Apple.
 
 Verification failure will enter **recovery mode**, if Boot ROM is not even able to load or verify LLB, it enters **DFU (Device Firmware Update) mode**.
 
@@ -25,7 +29,7 @@ Verification failure will enter **recovery mode**, if Boot ROM is not even able 
 
 ### System Software Authorization
 
-GOAL: prevent the devices from being downgraded
+GOAL: prevent the devices from being downgraded.
 
 Need iTunes to upgrade, when upgrading, iTunes (or the device) would send 
 
@@ -33,11 +37,11 @@ Need iTunes to upgrade, when upgrading, iTunes (or the device) would send
 2. nonce
 3. device's unique ID (ECID)
 
-to Apple installation authorization server
+to Apple installation authorization server.
 
-If upgrade request is permitted, server would add ECID to the measurement and signs the result
+If upgrade request is permitted, server would add ECID to the measurement and signs the result.
 
-Device would check each item loaded from disk at boot time
+Device would check each item loaded from disk at boot time.
 
 
 <!-- more -->
@@ -48,21 +52,20 @@ Device would check each item loaded from disk at boot time
 There are two kinds of processors, *application processor* and *Secure Enclave*.
 
 **What is Secure Enclave?** 
-A coprocessor fabricated in the Apple A7 chip, has ITS OWN *secure boot* (detail?) and *personalized software update*, *encrypted memory* and *hardware random number generator*.
+A coprocessor fabricated in the Apple A7 chip, has ITS OWN *secure boot* and *personalized software update*, *encrypted memory* and *hardware random number generator*.
 
 **What does Secure Enclave do?**
 It provides all cryptographic operations for Data Protection key management and maintains the integrity of Data Protection, it is also responsible for processing fingerprint data, determining if there is a match, and enabling access or purchase on behalf of the user. 
 
-**Communication with app processor?** Through interrupt-driven mailbox and shared memory data buffers.
+**How Secure Enclave communicate with app processor?** 
+Through interrupt-driven mailbox and shared memory data buffers.
 
 
-Each Secure Enclave is provisioned during fabrication with its own UID (Unique ID), not known to Apple, not accessible to other parts of the system. Note that this UID is NOT SAME with that fused into application processor.
+Each Secure Enclave is provisioned during fabrication with its own *UID (Unique ID)*, not known to Apple, not accessible to other parts of the system. Note that this UID is NOT SAME with that fused into application processor.
 
 Create an ephemeral key tangled with UID to encrypt Secure Enclave's portion of the device's memory space.
 
-Data saved to file system by Secure Enclave is encrypted with a key tangled with UID and an anti-replay counter. (Q:how to know the key for decryption?)
-
-
+Data saved to file system by Secure Enclave is encrypted with a key tangled with UID and an anti-replay counter.
 
 
 > The session key exchange uses AES key wrapping with both sides providing a random key that establishes the session key and uses AES-CCM transport encryption
@@ -74,6 +77,9 @@ Utilizes System Software Authorization to ensure the integrity of its software a
 1. How secure boot of Secure Enclave is achieved?
 
 1. Where the ephemeral key is stored? How about the key and anti-replay counter used to encrypt data written to file system by Secure Enclave?
+
+
+
 
 ### Touch ID
 
@@ -87,15 +93,22 @@ On regular A7 processor, Data Protection *class keys* are discarded, and regener
 
 With Touch ID, the keys are wrapped with a key given to Touch ID subsystem, Touch ID will provide the key for unwrapping if it recognizes the user's fingerprint (details refer to section *File Data Protection*)
 
+
+
+
 ### Simple Conclusion
 
-- UID
+The following features are most critical for iOS system security
+
+- UID in Secure Enclave
 - dedicated secure CPU
 - unbreakable ROM
 
 
 Encryption and Data Protection
 -----
+
+Focus on the protection of data stored on the device.
 
 ### Hardware Security Features
 
@@ -111,7 +124,7 @@ Apple's devices involves some hardware support for security, these includes:
 
 > Integrating these keys into the silicon helps prevent them from being tampered with or bypassed, or accessed outside the AES engine. 
 
-- A system *random number generator (RNG)* to create all other cryptographic keys
+- A hardware *random number generator (RNG)* to create all cryptographic keys (except those used in Secure Enclave)
 
 - *Effaceable Storage* for securely erasing saved keys
 
@@ -124,7 +137,7 @@ GOAL: Protect data stored in flash memory.
 
 > Data Protection allows the device to respond to common events such as incoming phone calls, but also enables a high level of encryption for sensitive data
 
-Managing a hierarchy of keys; built on hardware encryption; encrypted every file stored into the flash.
+Managing a **hierarchy of keys**; built on hardware encryption; encrypted every file stored into the flash.
 
 > Data Protection is controlled on a per-file basis by assigning each file to a class; accessibility is determined by whether the class keys have been unlocked
 
@@ -136,8 +149,9 @@ To open a file: **1.** decrypt metadata with *File System Key* **2.** unwrapped 
 
 Use a random *File System Key* to encrypt the metadata of all files in the file system. This file system key is created when iOS first installed or when the device is wiped by a user. The key is stored in Effaceable Storage to be quickly erased. 
 
-Once the File System Key is wiped, there should be no way to get the content all the files
+Once the File System Key is wiped, there should be no way to get the content of all the files.
 
+The work of key management is done by Secure Enclave, as mentioned in section Secure Enclave.
 
 
 
@@ -152,6 +166,7 @@ Passcode is tangled with UID.
 Takes longer and longer for brute-force hack.
 
 **Where is this Passcodes stored?**
+Passcodes should be managed by Secure Enclave, and stored in file system after being encrypted by Secure Enclave.
 
 
 
@@ -180,9 +195,9 @@ So in a short **conslusion**, all the files in iOS devices are encrypted, as the
 
 GOAL: protect short but sensitive bits of data in apps, such as keys and login tokens.
 
-Implemented as SQLite database, and there is only one database. The *securityd* deamon determines which keychain items each process or app can access.
+Implemented as SQLite database, and there is only one database in the system. The *securityd* deamon determines which keychain items each process or app can access.
 
-The deamon would check app's "keychain-access-groups" and the "application-identifier" entitlement. Apps from the same author (have the same access groups prefix allocated to them through the iOS Developer Program).
+The deamon would check app's "keychain-access-groups" and the "application-identifier" entitlement. Apps from the same author (have the same access groups prefix allocated to them through the iOS Developer Program) can share Keychain items.
 
 Similar protect class as file Data Protection.
 
@@ -191,7 +206,7 @@ Similar protect class as file Data Protection.
 
 ### Keybags
 
-Manage keys for file and keychain Data Protection classes, four keybags: *System*, *Backup*, *Escrow*, and *iCloud*.
+Manage keys for file and Keychain Data Protection classes, four keybags: *System*, *Backup*, *Escrow*, and *iCloud*.
 
 **System keybag** where wrapped class keys are stored, is No Protection class itself. Contents of system keybag are encrypted with a key held in Effaceable Storage. This key is wiped and regenerated each time user change Passcode. System keybag is the ONLY keybag stored on the device.
 
@@ -271,7 +286,20 @@ Use TLS connection.
 
 Internet Security
 -----
-Security control of iMessage, FaceTime, Siri, iCloud, iCloudKeychain
+Explain the security control of iMessage, FaceTime, Siri, iCloud, iCloudKeychain in detail.
+
+### iMessage
+
+The contents of messages of iMessage are protected by end-to-end encryption, so no one but the sender and receiver can access them, even Apple cannot.
+
+Device generates two pairs of keys for iMessage: an RSA 1280-bit key for encryption and an ECDSA 256-bit key for signing. The private keys are stored in device's keychain while the public keys are sent to Apple's directory service (IDS), where they are associated with user's phone number or email address and Apple Push Notification Service (APNs) address.
+
+To send a message, iMessage first fetches receiver's public keys and APNs addresses from the IDS, then encrypts the content using receiver's public keys, and signs the encrypted messages with the sender's private key, finally, iMessage dispatches each encrypted message to APNs for delivary. Metadata is not encrypted while communication with APNs is encrypted using TLS.
+
+If the message contains attachments, the attachments are uploaded to iCloud after encryption, the keys to decrypt attackments along with URI to the encrypted attachments are included in the encrypted message.
+
+For the receiver, each device receives its copy of the message from APNs, and decrypts the message with its own private key. The message can be verified using sender's public key.
+
 
 
 Device Control
@@ -286,3 +314,7 @@ Conclusion
 - Dedicated Secure Processor, with encrypted memory
 - Full Storage Encryption
 - Hierarchy of Key Management
+
+From the document we can see, Apple really takes great efforts in security, and as Apple's hardware and software are tightly combined, they possess the most enviable hardware security features. But to achieve security, Apple sacrifices the ability of third party apps by setting a lot of constrains and providing only a limited APIs.
+
+Oh! One more thing, all of these protections are useless if your device is rooted.
