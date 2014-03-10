@@ -100,7 +100,7 @@ disqus_short_name: hanjc
 disqus_show_comment_count: true
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-48829613-1
 
 # Facebook Like
 facebook_like: false 
