@@ -17,14 +17,16 @@ categories:
 格式说明
 -----
 
-	__asm__　__volatile__("Instruction List" : **O**utput : **I**nput : **C**lobber/Modify)
+	__asm__　__volatile__("Instruction List" : Output : Input : Clobber/Modify)
 
 
-冒号的使用原则：
+冒号的使用原则（*O, I, C 分别指代 Output, Input, Clobber/Modify*）：
 
 1. C 为空，第三个冒号必须省略
 1. O、I 为空时，前边的冒号（第一、二个）可选择性省略
 1. O，I，C 中任何一个不为空，则之前的冒号均必须保留，如只有 I 不为空时，O 和 I 之前的冒号必须保留，只有 C 不为空时三个冒号都必须保留
+
+
 
 合法的调用包括
 
