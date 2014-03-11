@@ -1,9 +1,13 @@
 ---
-layout: page
-title: "Paxos Made Simple"
+layout: post
+title: "Notes on Paxos Made Simple"
+date: 2014-02-12 16:21:02 +0800
 sharing: true 
 comments: true
 footer: true
+categories: 
+- Notes
+- Distributed Systems
 --- 
 
 [Origin paper link](http://pdos.csail.mit.edu/6.824-2013/papers/paxos-simple.pdf)
@@ -19,6 +23,9 @@ safety requirements
 
 
 three agents: *proposers*(P), *acceptors*(A), and *learners*(L).
+
+
+<!-- more -->
 
 
 use customary asynchronous, non-Byzantine model, in which:

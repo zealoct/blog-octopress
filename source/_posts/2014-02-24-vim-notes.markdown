@@ -1,15 +1,19 @@
 ---
-layout: page
-title: "vim notes"
+layout: post
+title: "Vim Efficiency Notes"
 date: 2014-02-24 15:00
 comments: true
 sharing: true
 footer: true
+categories: 
+- Notes
+- Vim
 ---
 
 关于Vim的一些容易被忽视、却又能提升使用体验和操作效率的操作细节。同时记录Vim中一些（我见到过的）比较实用的配置，分享的同时也给自己留个备忘吧。
 一下子总结不完整，慢慢更新。
 
+<!-- more -->
 
 基本操作
 -----

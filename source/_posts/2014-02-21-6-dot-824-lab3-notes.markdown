@@ -5,6 +5,8 @@ date: 2014-02-21 14:08:02 +0800
 comments: true
 published: false
 categories: 
+- Exercises
+- Distributed Systems
 ---
 
 
@@ -24,6 +26,8 @@ Paxos键值存储系统包括
 其中Paxos节点部分以类库的形式运行在服务器之上，在lab3的整体模型类似于[Paxos Made Simple](http://pdos.csail.mit.edu/6.824-2013/papers/paxos-simple.pdf)第三节提到的状态机，其中proposer、acceptor和learner都是Paxos节点，**把整个键值存储服务看成一个状态机**，它会按照一定的顺序执行客户端发来的所有命令（Put请求），每个命令都确定性的把整个状态机向前推进一步。
 
 在这里，这个状态机是由很多服务器共同构成的，这些服务器之间彼此要**保证执行的命令的顺序完全一致**，为此，我们维护一个有序序列*list*，该序列就是所有服务器应当执行命令的顺序。
+
+<!-- more -->
 
 在服务器收到一个Put(k, v)请求之后
 
