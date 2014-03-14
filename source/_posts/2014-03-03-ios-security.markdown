@@ -50,16 +50,16 @@ Device would check each item loaded from disk at boot time.
 
 ### Secure Enclave
 
-There are two kinds of processors, *application processor* and *Secure Enclave*.
+There are two kinds of processors, *application processor (A7)* and *Secure Enclave*.
 
 **What is Secure Enclave?** 
-A coprocessor fabricated in the Apple A7 chip, has ITS OWN *secure boot* and *personalized software update*, *encrypted memory* and *hardware random number generator*.
+A coprocessor fabricated in the Apple A7 chip, has its OWN *secure boot* and *personalized software update*, *encrypted memory* and *hardware random number generator*.
 
 **What does Secure Enclave do?**
 It provides all cryptographic operations for Data Protection key management and maintains the integrity of Data Protection, it is also responsible for processing fingerprint data, determining if there is a match, and enabling access or purchase on behalf of the user. 
 
 **How Secure Enclave communicate with app processor?** 
-Through interrupt-driven mailbox and shared memory data buffers.
+Communication is isolated to an interrupt-driven mailbox and shared memory data buffers.
 
 
 Each Secure Enclave is provisioned during fabrication with its own *UID (Unique ID)*, not known to Apple, not accessible to other parts of the system. Note that this UID is NOT SAME with that fused into application processor.
@@ -68,8 +68,6 @@ Create an ephemeral key tangled with UID to encrypt Secure Enclave's portion of 
 
 Data saved to file system by Secure Enclave is encrypted with a key tangled with UID and an anti-replay counter.
 
-
-> The session key exchange uses AES key wrapping with both sides providing a random key that establishes the session key and uses AES-CCM transport encryption
 
 Utilizes System Software Authorization to ensure the integrity of its software and prevent downgrade.
 
@@ -84,16 +82,26 @@ Utilizes System Software Authorization to ensure the integrity of its software a
 
 ### Touch ID
 
-80*80 pixel, 500 ppi raster scan, temporarily stored in Secure Enclave, data out from Touch ID sensor is encrypted, A7 can only forward it to Secure Enclave but never read its content.
+80*80 pixel, 500 ppi [raster scan](http://en.wikipedia.org/wiki/Raster_scan), temporarily stored in Secure Enclave, data out from Touch ID sensor is encrypted, A7 can only forward it to Secure Enclave but never read its content.
 
-User's fingerprint map never leaves ip5s
+User's fingerprint map never leaves ip5s.
+
+#### Safe communicate with Secure Enclave
+
+Touch ID can only talk to Secure Enclave through application processor.  Communication between the A7 and the 
+Touch ID sensor takes place over a [serial peripheral interface bus](http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus).
+
+There is a *device's key* that is build into the Touch ID sensor and Secure Enclave (should differ from Enclave's UID and device UID in application processor). To communicate with Enclave, Touch ID first negotiates with Enclave for a session key, which process should be protected by the device's key. Touch ID then sends the encrypted scan result to Enclave.
+
+> The session key exchange uses AES key wrapping with both sides providing a random key that establishes the session key and uses AES-CCM transport encryption
+
+
 
 #### Process of unlocking an iPhone
 
 On regular A7 processor, Data Protection *class keys* are discarded, and regenerated when user unlock the device with passcode.
 
 With Touch ID, the keys are wrapped with a key given to Touch ID subsystem, Touch ID will provide the key for unwrapping if it recognizes the user's fingerprint (details refer to section *File Data Protection*)
-
 
 
 
